@@ -1,0 +1,26 @@
+{
+  "name": "rest-storage",
+  "version": "0.1.0",
+  "description": "NoSQL - JSON REST Storage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irff/rest-storage.git"
+  },
+  "keywords": [
+    "nosql",
+    "database",
+    "rest",
+    "json",
+    "storage"
+  ],
+  "author": "Tri Ahmad Irfan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/irff/rest-storage/issues"
+  },
+  "homepage": "https://github.com/irff/rest-storage#readme"
+}
