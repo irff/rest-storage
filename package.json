@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/irff/rest-storage#readme",
   "dependencies": {
-    "node-persist": "0.0.11"
+    "node-persist": "0.0.11",
+    "restify": "^4.0.4"
   }
 }
