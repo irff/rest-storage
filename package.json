@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/irff/rest-storage/issues"
   },
-  "homepage": "https://github.com/irff/rest-storage#readme"
+  "homepage": "https://github.com/irff/rest-storage#readme",
+  "dependencies": {
+    "node-persist": "0.0.11"
+  }
 }
