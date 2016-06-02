@@ -1,6 +1,6 @@
 {
   "name": "rest-storage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NoSQL - JSON REST Storage",
   "main": "index.js",
   "scripts": {
@@ -31,5 +31,8 @@
     "mocha": "^2.5.3",
     "should": "^9.0.0",
     "supertest": "^1.2.0"
+  },
+  "bin": {
+    "rest-storage": "./index.js"
   }
 }
