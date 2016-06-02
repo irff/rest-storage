@@ -43,8 +43,10 @@ describe('GET object', function() {
         owner: testOwner,
         key: testKey,
         value: JSON.stringify(testValue)
+      })
+      .end(function(err, res) {
       });
-      
+
     server
       .get('/get/' + testOwner + '/' + testKey)
       .expect(200)
