@@ -7,6 +7,11 @@ function toFileKey(owner, key) {
   return owner + '---' + key;
 }
 
+function getKeyFromFileKey(fileKey) {
+  var splittedString = fileKey.split('---');
+  return splittedString[1];
+}
+
 function rs_init(req, res, next) {
   // res.send('init: ' + req.params.owner);
   res.status(200).json({name: 'Irfan'});
@@ -154,7 +159,46 @@ function rs_remove(req, res, next) {
 }
 
 function rs_clear(req, res, next) {
-  res.send('clear: ' + req.params.owner);
+  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+
+  try {
+    if(req.params.owner && req.params.owner.length != 0) {
+      var owner = req.params.owner;
+    } else {
+      throw Error("Owner can't be empty");
+    }
+
+    var regex_filter = new RegExp('^' + owner + '---');
+
+    var keys = storage.keys();
+
+    var cleared_keys = keys.filter(function(elem) {
+      return regex_filter.test(elem);
+    }).map(function(elem) {
+      return getKeyFromFileKey(elem);
+    });
+
+    cleared_keys = cleared_keys.sort();
+
+    for(var i = 0; i < cleared_keys.length; i++) {
+      storage.removeItemSync(toFileKey(owner, cleared_keys[i]));
+    }
+
+    var result = {
+      status: 'success',
+      cleared_keys: cleared_keys
+    }
+    
+    res.end(JSON.stringify(result));
+
+  } catch(err) {
+    var result = {
+      status: 'error',
+      message: err.message
+    };
+
+    res.end(JSON.stringify(result));
+  }
   next();
 }
 
