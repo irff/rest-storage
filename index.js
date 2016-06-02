@@ -1,1 +1,1 @@
-var rest = require('./src/rest.js');
+var restStorage = require('./src/rest-storage.js');
