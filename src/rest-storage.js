@@ -14,10 +14,46 @@ function rs_init(req, res, next) {
 }
 
 function rs_get(req, res, next) {
-  var result = {name: 'Irfan'};
   res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-  res.end(JSON.stringify(result));
-  // res.send('get: ' + req.params.owner);
+
+  try {
+    if(req.params.owner && req.params.owner.length != 0) {
+      var owner = req.params.owner;
+    } else {
+      throw Error("Owner can't be empty");
+    }
+
+    if(req.params.key && req.params.key.length != 0) {
+      var key = req.params.key;
+    } else {
+      throw Error("Key can't be empty");
+    }
+
+    // get action
+    var data = storage.getItem(toFileKey(owner, key));
+
+    // send response
+    if(data) {
+      var result = {
+        status: 'success',
+        owner: owner,
+        key: key,
+        value: data
+      };
+      res.end(JSON.stringify(result));
+    } else {
+      throw Error("Data doesn't exist");
+    }
+
+  } catch(err) {
+    var result = {
+      status: 'error',
+      message: err.message
+    };
+
+    res.end(JSON.stringify(result));
+  }
+
   next();
 }
 
@@ -86,7 +122,7 @@ server.use(restify.bodyParser());
 
 server.post('/init', rs_init);
 
-server.get('/get/:owner', rs_get);
+server.get('/get/:owner/:key', rs_get);
 
 server.post('/store', rs_store);
 

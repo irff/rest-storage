@@ -26,20 +26,78 @@ describe('INIT storage', function() {
 });
 
 describe('GET object', function() {
-  it('should return json object', function(done) {
+  var testOwner = 'scele',
+      testKey = 'student-irfan',
+      testNonExistentKey = 'course-database',
+      testValue = {
+        name: 'Tri Ahmad Irfan',
+        npm: '1306398983'
+      };
+
+  it
+
+  it('should return the right JSON object when accessing existing data', function(done) {
     server
-      .get('/get/irfan')
+      .post('/store')
+      .send({
+        owner: testOwner,
+        key: testKey,
+        value: JSON.stringify(testValue)
+      });
+      
+    server
+      .get('/get/' + testOwner + '/' + testKey)
       .expect(200)
       .expect('Content-type', /json/)
+      .expect(statusIsSuccess)
       .expect({
-        name: 'Irfan'
+        status: 'success',
+        owner: testOwner,
+        key: testKey,
+        value: testValue
       })
+      .end(function(err, res) {
+        if(err) return done(err);
+        done();        
+      });
+
+  });
+
+  it('should return error when accessing nonexistent data', function(done) {
+    server
+      .get('/get/' + testOwner + '/' + testNonExistentKey)
+      .expect(200)
+      .expect('Content-type', /json/)
+      .expect(statusIsError)
+      .end(function(err, res) {
+        if(err) return done(err);
+        done();        
+      });
+  });
+
+  it('should return error when owner is not present in the request', function(done) {
+    server
+      .get('/get//x')
+      .expect(200)
+      .expect('Content-type', /json/)
+      .expect(statusIsError)
       .end(function(err, res) {
         if(err) return done(err);
         done();
       });
   });
 
+  it('should return error when key is not present in the request', function(done) {
+    server
+      .get('/get/x/')
+      .expect(200)
+      .expect('Content-type', /json/)
+      .expect(statusIsError)
+      .end(function(err, res) {
+        if(err) return done(err);
+        done();
+      });
+  });
 });
 
 describe('STORE object', function() {
