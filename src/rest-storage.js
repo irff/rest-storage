@@ -107,7 +107,49 @@ function rs_store(req, res, next) {
 }
 
 function rs_remove(req, res, next) {
-  res.send('remove: ' + req.params.owner);
+  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+
+  try {
+    if(req.params.owner && req.params.owner.length != 0) {
+      var owner = req.params.owner;
+    } else {
+      throw Error("Owner can't be empty");
+    }
+
+    if(req.params.key && req.params.key.length != 0) {
+      var key = req.params.key;
+    } else {
+      throw Error("Key can't be empty");
+    }
+
+    // get action
+    var data = storage.getItem(toFileKey(owner, key));
+
+    if(data) {
+      // remove action
+      storage.removeItemSync(toFileKey(owner, key));
+
+      // send response
+      var result = {
+        status: 'success',
+        owner: owner,
+        key: key,
+        value: data
+      };
+      res.end(JSON.stringify(result));
+    } else {
+      throw Error("Data doesn't exist");
+    }
+
+  } catch(err) {
+    var result = {
+      status: 'error',
+      message: err.message
+    };
+
+    res.end(JSON.stringify(result));
+  }
+
   next();
 }
 
@@ -126,7 +168,7 @@ server.get('/get/:owner/:key', rs_get);
 
 server.post('/store', rs_store);
 
-server.get('/remove/:owner', rs_remove);
+server.get('/remove/:owner/:key', rs_remove);
 
 server.get('/clear/:owner', rs_clear);
 
