@@ -25,20 +25,30 @@ REST-STORAGE adalah sebuah service yang memungkinkan klien untuk menyimpan blok-
 
 ## API Guide
 
-### GET: mengakses data `[GET]`
+#### GET: mengakses data `[GET]`
+
 Format request: `/get/:owner/:key`
 
-### STORE: menyimpan data `[POST]`
-Format request: `/store`
-Dengan parameter: `{ owner: ‘nama-owner’, key: ‘nama-key’, value: ‘sebuah-value’}`
+#### STORE: menyimpan data `[POST]`
 
-### REMOVE: menghapus sebuah data `[GET]`
+Format request: `/store`
+
+Dengan parameter:
+```
+{
+  owner: "nama-owner", 
+  key: "nama-key",
+  value: "any-json-value"
+}
+```
+
+#### REMOVE: menghapus sebuah data `[GET]`
 Format request: `/remove/:owner/:key`
 
-### CLEAR: mengosongkan storage seorang owner `[GET]`
+#### CLEAR: mengosongkan storage seorang owner `[GET]`
 Format request: `/clear/:owner`
 
-### Developer Guide
+## Developer Guide
 ```
 > git clone https://github.com/irff/rest-storage
 > npm install
