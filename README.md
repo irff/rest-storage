@@ -16,3 +16,38 @@ REST-STORAGE adalah sebuah service yang memungkinkan klien untuk menyimpan blok-
 - Multi-file storage
 - Multi-tenant
 - Hassle free installation
+
+## How to Use
+```
+> npm install -g rest-storage
+> rest-storage
+```
+
+## API Guide
+
+### GET: mengakses data `[GET]`
+Format request: `/get/:owner/:key`
+
+### STORE: menyimpan data `[POST]`
+Format request: `/store`
+Dengan parameter: `{ owner: ‘nama-owner’, key: ‘nama-key’, value: ‘sebuah-value’}`
+
+### REMOVE: menghapus sebuah data `[GET]`
+Format request: `/remove/:owner/:key`
+
+### CLEAR: mengosongkan storage seorang owner `[GET]`
+Format request: `/clear/:owner`
+
+### Developer Guide
+```
+> git clone https://github.com/irff/rest-storage
+> npm install
+> npm test
+> node index.js
+```
+
+## Credits
+This project is built using [simonlast/node-persist](https://github.com/simonlast/node-persist) as the storage engine.
+
+## License
+This project is built using MIT License 
